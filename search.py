@@ -24,7 +24,7 @@ def split_into_lemmas(message):
         outstring+=i + " "
     return outstring
 
-def autocorrect(s):
+def autocor(s):
     s = s.lower()
     l = s.split()
     l = [spell(i) for i in l]
@@ -105,7 +105,7 @@ else:
 
 # query input
 q = raw_input("Search: ")
-query = [split_into_lemmas(syn_expand(autocorrect(q)))]
+query = [split_into_lemmas(syn_expand(autocor(q)))]
 querytfidf = vectorizer.transform(query)
 cosine_similarities = linear_kernel(querytfidf, tfidf).flatten()
 related_docs_indices = cosine_similarities.argsort()[:-100:-1]
@@ -123,7 +123,7 @@ with open("tags.txt","r") as tagfile:
 has_search_tag = False
 search_tag_list = []
 for tag in tag_list:
-    if tag.lower() in autocorrect(q):
+    if tag.lower() in autocor(q):
         has_search_tag = True
         search_tag_list.append(tag)
 
